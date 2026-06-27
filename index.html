@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FinSight — Finance & Investing Blog</title>
+  <meta name="description" content="Smart money insights, simplified for you. Read and share articles on personal finance, markets, and investing strategies." />
+  <meta property="og:title" content="FinSight — Finance & Investing Blog" />
+  <meta property="og:description" content="Smart money insights, simplified for you." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #ffffff;
+      --surface-2: #f0efe9;
+      --border: #e2e0d8;
+      --border-strong: #cac8be;
+      --text: #1a1916;
+      --text-muted: #6b6a63;
+      --text-faint: #a09f98;
+      --accent: #1a6b3c;
+      --accent-light: #e8f3ed;
+      --accent-border: #b3d9c0;
+      --accent-hover: #155730;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.09), 0 2px 4px rgba(0,0,0,0.05);
+    }
+    [data-theme="dark"] {
+      --bg: #141412;
+      --surface: #1e1d1b;
+      --surface-2: #252420;
+      --border: #2e2d28;
+      --border-strong: #3d3c35;
+      --text: #f0efe9;
+      --text-muted: #9e9d96;
+      --text-faint: #5e5d58;
+      --accent: #4caf73;
+      --accent-light: #0f2e1d;
+      --accent-border: #1a4a2c;
+      --accent-hover: #5cc480;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LAYOUT ── */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 1.25rem; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.85rem 1.25rem; max-width: 860px; margin: 0 auto;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Lora', serif; font-size: 20px; font-weight: 600;
+      color: var(--text); cursor: pointer;
+    }
+    .logo-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--accent);
+    }
+    .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-link {
+      font-size: 14px; color: var(--text-muted); cursor: pointer;
+      padding: 4px 8px; border-radius: 6px;
+    }
+    .nav-link:hover { color: var(--text); background: var(--surface-2); }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 15px; border-radius: var(--radius);
+      font-size: 13px; font-weight: 500; cursor: pointer; border: none;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-ghost {
+      background: none; border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-ghost:hover { border-color: var(--border-strong); color: var(--text); background: var(--surface-2); }
+
+    /* dark toggle */
+    .theme-btn {
+      width: 34px; height: 34px; border-radius: 8px; border: 1px solid var(--border);
+      background: var(--surface-2); cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; transition: background 0.15s;
+    }
+    .theme-btn:hover { background: var(--border); }
+
+    /* ── HERO ── */
+    .hero { padding: 3rem 0 2rem; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-light); border: 1px solid var(--accent-border);
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 1.1rem;
+    }
+    .hero h1 {
+      font-family: 'Lora', serif; font-size: clamp(30px, 5vw, 46px);
+      font-weight: 600; line-height: 1.18; margin-bottom: 0.85rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p { font-size: 16px; color: var(--text-muted); max-width: 520px; line-height: 1.7; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+      padding: 1.25rem 0; margin: 1.75rem 0;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .stat-num { font-size: 22px; font-weight: 600; color: var(--text); }
+    .stat-label { font-size: 12px; color: var(--text-faint); margin-top: 1px; }
+
+    /* ── CATEGORY PILLS ── */
+    .cat-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 2rem; }
+    .cat-pill {
+      padding: 5px 14px; border-radius: 20px; font-size: 13px;
+      border: 1px solid var(--border); background: var(--surface);
+      color: var(--text-muted); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cat-pill:hover { border-color: var(--accent-border); color: var(--accent); }
+    .cat-pill.active {
+      background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+
+    /* ── FEATURED ── */
+    .featured {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.75rem;
+      display: grid; grid-template-columns: 1fr 90px; gap: 1.5rem;
+      align-items: start; margin-bottom: 2.25rem;
+      box-shadow: var(--shadow);
+    }
+    .feat-badge {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--accent); background: var(--accent-light);
+      padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 0.8rem;
+    }
+    .featured h2 {
+      font-family: 'Lora', serif; font-size: 22px; font-weight: 600;
+      line-height: 1.3; margin-bottom: 0.6rem; cursor: pointer;
+    }
+    .featured h2:hover { color: var(--accent); }
+    .featured > div > p { font-size: 14px; color: var(--text-muted); line-height: 1.65; margin-bottom: 1rem; }
+    .post-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 12px; color: var(--text-faint); }
+    .meta-icon { margin-right: 4px; }
+    .feat-icon {
+      width: 88px; height: 88px; border-radius: 12px;
+      background: var(--accent-light); display: flex; align-items: center;
+      justify-content: center; font-size: 36px; border: 1px solid var(--accent-border);
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-faint); margin-bottom: 1rem;
+    }
+
+    /* ── POSTS GRID ── */
+    .posts-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem; margin-bottom: 2.5rem;
+    }
+    .post-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.25rem; cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-shadow: var(--shadow);
+    }
+    .post-card:hover { border-color: var(--accent-border); box-shadow: var(--shadow-md); }
+    .post-card-cat { font-size: 11px; font-weight: 600; color: var(--accent); margin-bottom: 0.5rem; }
+    .post-card h3 {
+      font-family: 'Lora', serif; font-size: 15px; font-weight: 600;
+      line-height: 1.4; margin-bottom: 0.5rem;
+    }
+    .post-card p { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 1rem; }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-faint); }
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 3px 9px; font-size: 11px; font-weight: 500;
+      color: var(--text-muted); background: none; cursor: pointer;
+      transition: all 0.15s;
+    }
+    .share-btn:hover { border-color: var(--accent-border); color: var(--accent); }
+
+    /* ── NEWSLETTER ── */
+    .newsletter {
+      background: var(--accent-light); border: 1px solid var(--accent-border);
+      border-radius: 14px; padding: 2rem; text-align: center; margin-bottom: 2.5rem;
+    }
+    .newsletter h3 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; margin-bottom: 0.4rem; }
+    .newsletter p { font-size: 14px; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .nl-form { display: flex; gap: 8px; max-width: 400px; margin: 0 auto; }
+    .nl-form input {
+      flex: 1; padding: 9px 13px; border-radius: var(--radius);
+      border: 1px solid var(--accent-border); background: var(--surface);
+      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text);
+      outline: none;
+    }
+    .nl-form input:focus { border-color: var(--accent); }
+    .nl-form button { white-space: nowrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border); padding: 1.5rem 0;
+      text-align: center; font-size: 13px; color: var(--text-faint);
+    }
+    footer a { color: var(--accent); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 200;
+      align-items: center; justify-content: center; padding: 1rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--surface); border-radius: 16px;
+      border: 1px solid var(--border); padding: 2rem;
+      width: 100%; max-width: 520px;
+      box-shadow: var(--shadow-md);
+    }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .modal-head h3 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; }
+    .close-x { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--text-muted); line-height: 1; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 5px; }
+    .field input, .field select, .field textarea {
+      width: 100%; padding: 9px 13px; border-radius: var(--radius);
+      border: 1px solid var(--border); background: var(--bg);
+      font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text);
+      outline: none; transition: border-color 0.15s;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+    .field textarea { height: 110px; resize: vertical; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300;
+      background: var(--surface); border: 1px solid var(--accent-border);
+      border-radius: 10px; padding: 10px 18px;
+      font-size: 13px; font-weight: 500; color: var(--accent);
+      box-shadow: var(--shadow-md);
+      display: flex; align-items: center; gap: 8px;
+      transform: translateY(10px); opacity: 0;
+      transition: all 0.25s; pointer-events: none;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ── POST DETAIL ── */
+    .post-detail { display: none; }
+    .post-detail.open { display: block; }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--text-muted); cursor: pointer;
+      margin-bottom: 1.5rem;
+    }
+    .back-btn:hover { color: var(--accent); }
+    .detail-cat { font-size: 12px; font-weight: 600; color: var(--accent); margin-bottom: 0.75rem; }
+    .detail h1 {
+      font-family: 'Lora', serif; font-size: clamp(22px, 4vw, 32px);
+      font-weight: 600; line-height: 1.25; margin-bottom: 1rem;
+    }
+    .detail-meta { display: flex; gap: 1.5rem; font-size: 13px; color: var(--text-faint); margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+    .detail-body { font-size: 16px; line-height: 1.8; color: var(--text); }
+    .detail-body p { margin-bottom: 1.1rem; }
+    .detail-body h2 { font-family: 'Lora', serif; font-size: 20px; font-weight: 600; margin: 1.5rem 0 0.75rem; }
+    .detail-share { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 0.75rem; align-items: center; }
+    .detail-share span { font-size: 14px; font-weight: 500; }
+
+    /* ── HOME / DETAIL VIEW SWITCH ── */
+    .home-view { }
+    .home-view.hidden { display: none; }
+    .detail-view { display: none; }
+    .detail-view.open { display: block; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .featured { grid-template-columns: 1fr; }
+      .feat-icon { display: none; }
+      .nav-link { display: none; }
+      .stats-bar { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="logo" onclick="goHome()">
+      <div class="logo-dot"></div>
+      FinSight
+    </div>
+    <div class="nav-right">
+      <span class="nav-link" onclick="goHome()">Home</span>
+      <span class="nav-link" onclick="filterCat('Investing')">Investing</span>
+      <span class="nav-link" onclick="filterCat('Markets')">Markets</span>
+      <span class="nav-link" onclick="filterCat('Personal Finance')">Personal Finance</span>
+      <button class="theme-btn" onclick="toggleTheme()" title="Toggle dark mode" id="theme-icon">🌙</button>
+      <button class="btn btn-primary" onclick="openModal()">✏️ Write a post</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HOME VIEW -->
+<div class="home-view" id="home-view">
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-badge">📊 Finance &amp; Investing</div>
+      <h1>Smart money insights,<br><em>simplified for you</em></h1>
+      <p>Read and share articles on personal finance, markets, and investing strategies — written for everyone from beginners to seasoned investors.</p>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-bar">
+      <div>
+        <div class="stat-num" id="stat-posts">7</div>
+        <div class="stat-label">Articles published</div>
+      </div>
+      <div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Topics covered</div>
+      </div>
+      <div>
+        <div class="stat-num">1.2k</div>
+        <div class="stat-label">Readers this month</div>
+      </div>
+      <div>
+        <div class="stat-num">Free</div>
+        <div class="stat-label">Always</div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="cat-row" id="cat-row">
+      <div class="cat-pill active" onclick="filterCat('All',this)">All</div>
+      <div class="cat-pill" onclick="filterCat('Investing',this)">Investing</div>
+      <div class="cat-pill" onclick="filterCat('Personal Finance',this)">Personal Finance</div>
+      <div class="cat-pill" onclick="filterCat('Markets',this)">Markets</div>
+      <div class="cat-pill" onclick="filterCat('Budgeting',this)">Budgeting</div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="featured" id="featured-block">
+      <div>
+        <div class="feat-badge">✦ Featured</div>
+        <h2 onclick="openPost(0)">How compound interest quietly builds your wealth over decades</h2>
+        <p>Most people underestimate the long-term effect of compound interest. Starting with just a small monthly contribution can grow into a significant nest egg — here's the math behind it and how to put it to work for you.</p>
+        <div class="post-meta">
+          <span><span class="meta-icon">📅</span>Jun 20, 2026</span>
+          <span><span class="meta-icon">⏱</span>5 min read</span>
+          <span><span class="meta-icon">👁</span>842 views</span>
+          <button class="share-btn" onclick="copyLink('How compound interest quietly builds your wealth over decades')">🔗 Share</button>
+        </div>
+      </div>
+      <div class="feat-icon">📈</div>
+    </div>
+
+    <!-- POSTS -->
+    <div class="section-label">Recent articles</div>
+    <div class="posts-grid" id="posts-grid"></div>
+
+    <!-- NEWSLETTER -->
+    <div class="newsletter">
+      <h3>Get new articles in your inbox</h3>
+      <p>Finance, investing, and money management — delivered weekly. No spam, ever.</p>
+      <div class="nl-form">
+        <input type="email" placeholder="your@email.com" id="nl-email" />
+        <button class="btn btn-primary" onclick="subscribe()">Subscribe</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div class="detail-view" id="detail-view">
+  <div class="wrap" style="padding-top: 2rem; padding-bottom: 3rem;">
+    <div class="back-btn" onclick="goHome()">← Back to all posts</div>
+    <div class="detail-cat" id="d-cat"></div>
+    <div class="detail">
+      <h1 id="d-title"></h1>
+      <div class="detail-meta">
+        <span id="d-date"></span>
+        <span id="d-read"></span>
+      </div>
+      <div class="detail-body" id="d-body"></div>
+    </div>
+    <div class="detail-share">
+      <span>Share this article:</span>
+      <button class="btn btn-ghost" onclick="copyLinkDetail()">🔗 Copy link</button>
+      <button class="btn btn-ghost" onclick="shareTwitter()">𝕏 Twitter</button>
+      <button class="btn btn-ghost" onclick="shareWhatsapp()">💬 WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <p>© 2026 <strong>FinSight</strong> · Built with passion for financial literacy · <a href="#" onclick="openModal()">Write a post</a></p>
+  </div>
+</footer>
+
+<!-- WRITE MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Write a new post</h3>
+      <button class="close-x" onclick="closeModal()">×</button>
+    </div>
+    <div class="field">
+      <label>Post title *</label>
+      <input type="text" id="p-title" placeholder="e.g. How to start investing in index funds" />
+    </div>
+    <div class="field">
+      <label>Category</label>
+      <select id="p-cat">
+        <option>Investing</option>
+        <option>Personal Finance</option>
+        <option>Markets</option>
+        <option>Budgeting</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Article content</label>
+      <textarea id="p-body" placeholder="Write your full article here..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="publishPost()">Publish post</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span>✓</span><span id="toast-msg">Done!</span>
+</div>
+
+<script>
+  /* ── DATA ── */
+  const POSTS = [
+    {
+      title: "5 index funds every beginner investor should know",
+      cat: "Investing", date: "Jun 18, 2026", read: "4 min read", emoji: "💼",
+      summary: "Index funds are one of the simplest ways to build long-term wealth. We break down five popular options with low fees and strong track records.",
+      body: `<p>Index funds are baskets of stocks that track a market index — like the S&P 500 — without active management. Because there's no fund manager making stock-picking decisions, fees are dramatically lower than actively managed funds.</p>
+      <h2>Why index funds work</h2>
+      <p>Decades of research show that most active fund managers fail to beat their benchmark index over the long term, especially after fees. By simply matching the market, index funds consistently outperform the majority of actively managed alternatives.</p>
+      <h2>Five funds to consider</h2>
+      <p><strong>1. S&P 500 Index Fund</strong> — Tracks the 500 largest US companies. The gold standard for most beginner investors.</p>
+      <p><strong>2. Total Market Index Fund</strong> — Includes small, mid, and large-cap US stocks for broader exposure.</p>
+      <p><strong>3. International Index Fund</strong> — Adds global diversification beyond the US market.</p>
+      <p><strong>4. Bond Index Fund</strong> — Provides stability and income, balancing equity risk.</p>
+      <p><strong>5. Dividend Index Fund</strong> — Focuses on companies with consistent dividend payouts.</p>
+      <p>Start with a simple two-fund portfolio: a total market fund plus an international fund. That alone covers thousands of companies across the globe.</p>`
+    },
+    {
+      title: "A practical budget template for irregular income",
+      cat: "Budgeting", date: "Jun 15, 2026", read: "6 min read", emoji: "🗓️",
+      summary: "Freelancers and self-employed workers face unique budgeting challenges. This template adapts to fluctuating monthly income.",
+      body: `<p>Traditional budgets assume a fixed paycheck. For freelancers, consultants, and gig workers, income varies dramatically month to month — making standard budgeting advice nearly useless.</p>
+      <h2>The baseline approach</h2>
+      <p>Start by identifying your baseline: the absolute minimum income you can reliably count on in a bad month. Build your essential expenses — rent, utilities, groceries, minimum debt payments — to fit comfortably within that baseline.</p>
+      <h2>Building your income buffer</h2>
+      <p>In good months, resist lifestyle inflation. Funnel excess income into three buckets: an emergency fund (3–6 months of expenses), a tax reserve (25–30% of income if self-employed), and a future expenses fund for irregular costs like insurance renewals or equipment.</p>
+      <p>When your buffer reaches a healthy size, you can start investing the surplus. The key is that your core lifestyle runs on your worst-case income, so financial stress drops dramatically.</p>`
+    },
+    {
+      title: "What the Fed rate decisions mean for your savings",
+      cat: "Markets", date: "Jun 12, 2026", read: "3 min read", emoji: "🏦",
+      summary: "When central banks move interest rates, your savings account, mortgage, and investments all feel the impact. Here's how to think about it.",
+      body: `<p>The Federal Reserve's interest rate decisions ripple through the entire economy. When the Fed raises rates, borrowing becomes more expensive — mortgages, car loans, and credit card rates all go up. But there's a silver lining for savers.</p>
+      <h2>Good news for savers</h2>
+      <p>Higher rates mean high-yield savings accounts, money market funds, and short-term bonds pay more. In a high-rate environment, keeping 3–6 months of expenses in a high-yield savings account earns meaningful returns while staying liquid.</p>
+      <h2>Impact on investments</h2>
+      <p>Rising rates tend to pressure stock valuations — particularly growth stocks whose future earnings are discounted at a higher rate. Bonds already held lose value as new bonds pay higher yields. However, new bond purchases lock in better returns for years ahead.</p>
+      <p>The practical takeaway: don't panic over rate changes. Rebalance toward shorter-duration bonds in rising-rate environments, keep your emergency fund in a high-yield account, and stay invested in equities for the long term.</p>`
+    },
+    {
+      title: "Emergency funds: how much is actually enough?",
+      cat: "Personal Finance", date: "Jun 8, 2026", read: "5 min read", emoji: "🛡️",
+      summary: "The classic 3–6 month rule is a starting point, not a finish line. Your ideal emergency fund depends on job stability, dependents, and expenses.",
+      body: `<p>Financial advisors have repeated "save 3–6 months of expenses" for decades. It's good advice — but it's a starting point, not the final word. Your ideal emergency fund is personal.</p>
+      <h2>Factors that push the number higher</h2>
+      <p>Self-employed or freelance income, a single-income household, dependents like children or aging parents, health conditions requiring frequent medical care, or a specialized job in a narrow field where re-hiring takes time — any of these push your target toward 9–12 months.</p>
+      <h2>When less is fine</h2>
+      <p>If you have a stable government or corporate job with strong union protections, no dependents, low fixed expenses, and supplementary income streams, 3 months may be adequate.</p>
+      <h2>Where to keep it</h2>
+      <p>Emergency funds belong in liquid, low-risk accounts: high-yield savings accounts or money market accounts. They should never be invested in stocks — the whole point is that the money is there when markets are down and you need cash most.</p>`
+    },
+    {
+      title: "Crypto vs stocks: a calm, numbers-based look",
+      cat: "Investing", date: "Jun 3, 2026", read: "7 min read", emoji: "📊",
+      summary: "Comparing crypto and equities without the hype. We look at historical returns, volatility, and how each fits a diversified portfolio.",
+      body: `<p>The crypto vs. stocks debate generates enormous heat but rarely much light. Let's look at what the numbers actually say about risk, return, and portfolio role.</p>
+      <h2>Historical returns</h2>
+      <p>The S&P 500 has returned roughly 10% annually over the past century, adjusted for dividends. Bitcoin, since 2010, has had extraordinary average returns — but also peak-to-trough drawdowns exceeding 80%, multiple times. Most crypto assets beyond Bitcoin have performed far worse on a risk-adjusted basis.</p>
+      <h2>Volatility is the key difference</h2>
+      <p>Stocks in a diversified index fund fluctuate, but rarely more than 30–40% in a bad year. Crypto assets can fall 70–90% and stay down for years. That level of drawdown is psychologically and financially damaging for most investors.</p>
+      <h2>Portfolio role</h2>
+      <p>A small crypto allocation — 1–5% of total portfolio for those who believe in it — is defensible as a high-risk, high-upside speculative position. Making it a core holding is a different, much riskier bet. Stocks remain the better core building block for most long-term investors.</p>`
+    },
+    {
+      title: "How to read a balance sheet in 10 minutes",
+      cat: "Markets", date: "May 28, 2026", read: "4 min read", emoji: "📋",
+      summary: "Balance sheets intimidate most people. This plain-English walkthrough covers assets, liabilities, and equity — the three things that really matter.",
+      body: `<p>A balance sheet is a snapshot of what a company owns, owes, and is worth at a single point in time. It follows one simple equation: Assets = Liabilities + Equity.</p>
+      <h2>Assets</h2>
+      <p>Everything the company owns or controls. Current assets (cash, receivables, inventory) can be converted to cash within a year. Non-current assets (property, equipment, patents) are longer-term. More cash and liquid assets relative to debts is a good sign.</p>
+      <h2>Liabilities</h2>
+      <p>Everything the company owes. Current liabilities (accounts payable, short-term debt) due within a year. Long-term liabilities (bonds, pension obligations) due later. Watch the debt-to-equity ratio — high debt can be fine for stable businesses but dangerous for volatile ones.</p>
+      <h2>Equity</h2>
+      <p>What's left for shareholders after subtracting liabilities from assets. Growing equity over time is a positive sign. Negative equity means liabilities exceed assets — usually a red flag unless the company is intentionally leveraged (like financial firms).</p>
+      <p>The most useful quick check: compare current assets to current liabilities. A ratio above 1.5 suggests the company can comfortably meet short-term obligations.</p>`
+    }
+  ];
+
+  let allPosts = [...POSTS];
+  let activeCat = 'All';
+  let currentPostIdx = null;
+  let darkMode = false;
+
+  /* ── RENDER ── */
+  function renderPosts() {
+    const grid = document.getElementById('posts-grid');
+    const list = activeCat === 'All' ? allPosts : allPosts.filter(p => p.cat === activeCat);
+    const featured = document.getElementById('featured-block');
+    featured.style.display = (activeCat === 'All') ? 'grid' : 'none';
+    grid.innerHTML = list.map((p, i) => `
+      <div class="post-card" onclick="openPost(${allPosts.indexOf(p)})">
+        <div class="post-card-cat">${p.emoji} ${p.cat}</div>
+        <h3>${p.title}</h3>
+        <p>${p.summary}</p>
+        <div class="card-footer">
+          <span>${p.date} · ${p.read}</span>
+          <button class="share-btn" onclick="event.stopPropagation();copyLink('${p.title.replace(/'/g,"\\'")}')">🔗 Share</button>
+        </div>
+      </div>
+    `).join('');
+    document.getElementById('stat-posts').textContent = allPosts.length + 1;
+  }
+
+  /* ── FILTER ── */
+  function filterCat(cat, el) {
+    activeCat = cat;
+    document.querySelectorAll('.cat-pill').forEach(c => c.classList.remove('active'));
+    if (el) { el.classList.add('active'); }
+    else {
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(p => { if (p.textContent.trim() === cat) p.classList.add('active'); });
+    }
+    renderPosts();
+    goHome();
+  }
+
+  /* ── POST DETAIL ── */
+  function openPost(idx) {
+    currentPostIdx = idx;
+    const p = allPosts[idx];
+    document.getElementById('d-cat').textContent = p.emoji + ' ' + p.cat;
+    document.getElementById('d-title').textContent = p.title;
+    document.getElementById('d-date').textContent = '📅 ' + p.date;
+    document.getElementById('d-read').textContent = '⏱ ' + p.read;
+    document.getElementById('d-body').innerHTML = p.body || `<p>${p.summary}</p>`;
+    document.getElementById('home-view').classList.add('hidden');
+    document.getElementById('detail-view').classList.add('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function goHome() {
+    document.getElementById('home-view').classList.remove('hidden');
+    document.getElementById('detail-view').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ── MODAL ── */
+  function openModal() { document.getElementById('modal-overlay').classList.add('open'); }
+  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  });
+
+  function publishPost() {
+    const title = document.getElementById('p-title').value.trim();
+    const cat = document.getElementById('p-cat').value;
+    const body = document.getElementById('p-body').value.trim();
+    if (!title) { showToast('Add a title to your post.'); return; }
+    const newPost = {
+      title, cat,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      read: Math.max(1, Math.ceil(body.split(' ').length / 200)) + ' min read',
+      emoji: { Investing: '💡', 'Personal Finance': '🧾', Markets: '📉', Budgeting: '📌' }[cat] || '✍️',
+      summary: body.slice(0, 160) + (body.length > 160 ? '…' : ''),
+      body: `<p>${body.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>')}</p>`
+    };
+    allPosts.unshift(newPost);
+    closeModal();
+    document.getElementById('p-title').value = '';
+    document.getElementById('p-body').value = '';
+    activeCat = 'All';
+    document.querySelectorAll('.cat-pill').forEach(c => c.classList.remove('active'));
+    document.querySelector('.cat-pill').classList.add('active');
+    renderPosts();
+    showToast('Post published! 🎉');
+  }
+
+  /* ── SHARE ── */
+  function copyLink(title) {
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const url = window.location.href.split('?')[0] + '?post=' + slug;
+    navigator.clipboard ? navigator.clipboard.writeText(url).then(() => showToast('Link copied to clipboard! 🔗')) : showToast('Link: ' + url);
+  }
+  function copyLinkDetail() { if (currentPostIdx !== null) copyLink(allPosts[currentPostIdx].title); }
+  function shareTwitter() {
+    if (currentPostIdx === null) return;
+    const p = allPosts[currentPostIdx];
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(p.title + ' — via FinSight')}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+  }
+  function shareWhatsapp() {
+    if (currentPostIdx === null) return;
+    const p = allPosts[currentPostIdx];
+    window.open(`https://wa.me/?text=${encodeURIComponent(p.title + ' ' + window.location.href)}`, '_blank');
+  }
+
+  /* ── NEWSLETTER ── */
+  function subscribe() {
+    const email = document.getElementById('nl-email').value.trim();
+    if (!email.includes('@')) { showToast('Enter a valid email address.'); return; }
+    document.getElementById('nl-email').value = '';
+    showToast('Subscribed! Welcome to FinSight. 📬');
+  }
+
+  /* ── DARK MODE ── */
+  function toggleTheme() {
+    darkMode = !darkMode;
+    document.body.setAttribute('data-theme', darkMode ? 'dark' : '');
+    document.getElementById('theme-icon').textContent = darkMode ? '☀️' : '🌙';
+    localStorage.setItem('finsight-theme', darkMode ? 'dark' : 'light');
+  }
+
+  /* ── TOAST ── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  /* ── INIT ── */
+  const savedTheme = localStorage.getItem('finsight-theme');
+  if (savedTheme === 'dark') { darkMode = true; document.body.setAttribute('data-theme', 'dark'); document.getElementById('theme-icon').textContent = '☀️'; }
+
+  renderPosts();
+</script>
+
+</body>
+</html>
