@@ -323,6 +323,7 @@
       <span class="nav-link" onclick="filterCat('Investing')">Investing</span>
       <span class="nav-link" onclick="filterCat('Markets')">Markets</span>
       <span class="nav-link" onclick="filterCat('Personal Finance')">Personal Finance</span>
+      <span class="nav-link" onclick="filterCat('Nepalese Taxation')">🇳🇵 Nepal Tax</span>
       <button class="theme-btn" onclick="toggleTheme()" title="Toggle dark mode" id="theme-icon">🌙</button>
       <button class="btn btn-primary" onclick="openModal()">✏️ Write a post</button>
     </div>
@@ -367,6 +368,7 @@
       <div class="cat-pill" onclick="filterCat('Personal Finance',this)">Personal Finance</div>
       <div class="cat-pill" onclick="filterCat('Markets',this)">Markets</div>
       <div class="cat-pill" onclick="filterCat('Budgeting',this)">Budgeting</div>
+      <div class="cat-pill" onclick="filterCat('Nepalese Taxation',this)">🇳🇵 Nepalese Taxation</div>
     </div>
 
     <!-- FEATURED -->
@@ -449,6 +451,7 @@
         <option>Personal Finance</option>
         <option>Markets</option>
         <option>Budgeting</option>
+        <option>Nepalese Taxation</option>
       </select>
     </div>
     <div class="field">
@@ -530,6 +533,19 @@
       <p>Stocks in a diversified index fund fluctuate, but rarely more than 30–40% in a bad year. Crypto assets can fall 70–90% and stay down for years. That level of drawdown is psychologically and financially damaging for most investors.</p>
       <h2>Portfolio role</h2>
       <p>A small crypto allocation — 1–5% of total portfolio for those who believe in it — is defensible as a high-risk, high-upside speculative position. Making it a core holding is a different, much riskier bet. Stocks remain the better core building block for most long-term investors.</p>`
+    },
+    {
+      title: "Nepalese income tax explained: brackets, rates, and how to file",
+      cat: "Nepalese Taxation", date: "Jun 25, 2026", read: "6 min read", emoji: "🇳🇵",
+      summary: "Nepal's income tax system can feel complex, but it follows a clear structure. Here's a plain-English breakdown of tax brackets, exemptions, and how to file your return with the IRD.",
+      body: `<p>Nepal's income tax is governed by the Income Tax Act 2058 (2002) and administered by the Inland Revenue Department (IRD). Whether you're a salaried employee, self-employed professional, or business owner, understanding your obligations helps you plan better and avoid penalties.</p>
+      <h2>Tax brackets for individuals (FY 2080/81)</h2>
+      <p>Nepal uses a progressive tax system. For individuals, the rates are approximately: income up to NPR 5,00,000 is taxed at 1%, NPR 5,00,001 to 7,00,000 at 10%, NPR 7,00,001 to 20,00,000 at 20%, NPR 20,00,001 to 50,00,000 at 30%, and income above NPR 50,00,000 at 36%. Couples filing jointly get a higher basic exemption threshold.</p>
+      <h2>Key exemptions and deductions</h2>
+      <p>Several deductions can reduce your taxable income: contributions to approved retirement funds (up to one-third of income), life insurance premiums, donations to approved charities, and interest on home loans for self-occupied property. Remote area allowances for government workers are also partially exempt.</p>
+      <h2>How to file your return</h2>
+      <p>Salaried employees typically have tax withheld at source by their employer (TDS). Self-employed individuals and business owners must file quarterly advance tax payments and an annual return. Filing is done online through the IRD portal at ird.gov.np. The deadline for annual returns is generally Poush end (mid-January).</p>
+      <p>Keeping proper records — salary slips, receipts, bank statements — makes filing straightforward and protects you in case of an audit.</p>`
     },
     {
       title: "How to read a balance sheet in 10 minutes",
@@ -620,7 +636,7 @@
       title, cat,
       date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       read: Math.max(1, Math.ceil(body.split(' ').length / 200)) + ' min read',
-      emoji: { Investing: '💡', 'Personal Finance': '🧾', Markets: '📉', Budgeting: '📌' }[cat] || '✍️',
+      emoji: { Investing: '💡', 'Personal Finance': '🧾', Markets: '📉', Budgeting: '📌', 'Nepalese Taxation': '🇳🇵' }[cat] || '✍️',
       summary: body.slice(0, 160) + (body.length > 160 ? '…' : ''),
       body: `<p>${body.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>')}</p>`
     };
